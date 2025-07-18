@@ -274,6 +274,12 @@
             }
 
             try {
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') {
+                    alert('Notifications are blocked. Please enable them in your browser settings.');
+                    return;
+                }
+
                 const registration = await navigator.serviceWorker.ready;
                 registration.showNotification(title || ' ', { 
                     body: body || ' ',
