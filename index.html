@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Notification Tester</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Scam Tester</title>
     <style>
         * {
             box-sizing: border-box;
@@ -66,13 +66,18 @@
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
-            min-width: 600px;
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px;
             text-align: left;
-            font-size: 16px;
+            font-size: 14px;
+        }
+        @media (max-width: 480px) {
+            th, td {
+                padding: 6px;
+                font-size: 13px;
+            }
         }
         th {
             background-color: #f2f2f2;
@@ -83,6 +88,12 @@
             background-color: #ffdddd;
         }
         tr.legitimate {
+            background-color: #ddffdd;
+        }
+        .scam input, .scam textarea {
+            background-color: #ffdddd;
+        }
+        .legitimate input, .legitimate textarea {
             background-color: #ddffdd;
         }
         tr {
@@ -112,7 +123,7 @@
     </style>
 </head>
 <body>
-    <h1>Notification Tester</h1>
+    <h1>Scam Tester</h1>
     
     <div class="form-container">
       <div class="form-group">
@@ -128,114 +139,93 @@
       <button id="sendBtn">Send Notification</button>
     </div>
     
-    <h2>Sample Notifications</h2>
+    <h2>Sample Messages</h2>
     <div class="table-container">
         <table id="notificationTable">
             <thead>
                 <tr>
-                    <th>Type</th>
                     <th>Title</th>
                     <th>Body</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="scam" onclick="fillForm('Urgent: Your account will be locked!', 'Click now to verify your details')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Urgent: Your account will be locked!', 'Click now to verify your details', this)">
                     <td>Urgent: Your account will be locked!</td>
                     <td>Click now to verify your details</td>
                 </tr>
-                <tr class="scam" onclick="fillForm(`You've won $1,000,000!`, 'Claim your prize by entering your bank details')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm(`You've won $1,000,000!`, 'Claim your prize by entering your bank details', this)">
                     <td>You've won $1,000,000!</td>
                     <td>Claim your prize by entering your bank details</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Virus detected!', 'Download this antivirus immediately')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Virus detected!', 'Download this antivirus immediately', this)">
                     <td>Virus detected!</td>
                     <td>Download this antivirus immediately</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Your package is delayed', 'Click to update delivery information')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Your package is delayed', 'Click to update delivery information', this)">
                     <td>Your package is delayed</td>
                     <td>Click to update delivery information</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Suspicious login attempt', 'Click here to secure your account')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Suspicious login attempt', 'Click here to secure your account', this)">
                     <td>Suspicious login attempt</td>
                     <td>Click here to secure your account</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Tax refund available', 'Enter your SSN to claim')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Tax refund available', 'Enter your SSN to claim', this)">
                     <td>Tax refund available</td>
                     <td>Enter your SSN to claim</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Your subscription is expiring', 'Renew now with credit card')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Your subscription is expiring', 'Renew now with credit card', this)">
                     <td>Your subscription is expiring</td>
                     <td>Renew now with credit card</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Bank account compromised', 'Verify your identity immediately')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Bank account compromised', 'Verify your identity immediately', this)">
                     <td>Bank account compromised</td>
                     <td>Verify your identity immediately</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Free iPhone giveaway', 'Just pay shipping costs')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Free iPhone giveaway', 'Just pay shipping costs', this)">
                     <td>Free iPhone giveaway</td>
                     <td>Just pay shipping costs</td>
                 </tr>
-                <tr class="scam" onclick="fillForm('Your computer is infected', 'Call this number for support')">
-                    <td>Scam</td>
+                <tr class="scam" onclick="fillForm('Your computer is infected', 'Call this number for support', this)">
                     <td>Your computer is infected</td>
                     <td>Call this number for support</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('New message received', 'You have 3 unread messages')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('New message received', 'You have 3 unread messages', this)">
                     <td>New message received</td>
                     <td>You have 3 unread messages</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Meeting reminder', 'Team sync in 15 minutes')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Meeting reminder', 'Team sync in 15 minutes', this)">
                     <td>Meeting reminder</td>
                     <td>Team sync in 15 minutes</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Password changed', 'Your password was updated successfully')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Password changed', 'Your password was updated successfully', this)">
                     <td>Password changed</td>
                     <td>Your password was updated successfully</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Order shipped', 'Your package will arrive tomorrow')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Order shipped', 'Your package will arrive tomorrow', this)">
                     <td>Order shipped</td>
                     <td>Your package will arrive tomorrow</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Calendar event', 'Dentist appointment at 2pm')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Calendar event', 'Dentist appointment at 2pm', this)">
                     <td>Calendar event</td>
                     <td>Dentist appointment at 2pm</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('New follower', 'John Doe started following you')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('New follower', 'John Doe started following you', this)">
                     <td>New follower</td>
                     <td>John Doe started following you</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Software update', 'New version available to download')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Software update', 'New version available to download', this)">
                     <td>Software update</td>
                     <td>New version available to download</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Backup complete', 'Your files were successfully backed up')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Backup complete', 'Your files were successfully backed up', this)">
                     <td>Backup complete</td>
                     <td>Your files were successfully backed up</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Payment received', '$50.00 from Jane Smith')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Payment received', '$50.00 from Jane Smith', this)">
                     <td>Payment received</td>
                     <td>$50.00 from Jane Smith</td>
                 </tr>
-                <tr class="legitimate" onclick="fillForm('Low battery', 'Your device battery is at 15%')">
-                    <td>Legitimate</td>
+                <tr class="legitimate" onclick="fillForm('Low battery', 'Your device battery is at 15%', this)">
                     <td>Low battery</td>
                     <td>Your device battery is at 15%</td>
                 </tr>
@@ -245,10 +235,33 @@
 
     <script>
         // Fill form when clicking table rows
-        function fillForm(title, body) {
-            document.getElementById('title').value = title;
-            document.getElementById('body').value = body;
+        function fillForm(title, body, rowElement) {
+            const titleInput = document.getElementById('title');
+            const bodyInput = document.getElementById('body');
+            
+            // Remove previous color classes
+            titleInput.classList.remove('scam', 'legitimate');
+            bodyInput.classList.remove('scam', 'legitimate');
+            
+            // Add new color class from clicked row
+            if (rowElement.classList.contains('scam') || rowElement.classList.contains('legitimate')) {
+                const rowClass = rowElement.classList.contains('scam') ? 'scam' : 'legitimate';
+                titleInput.classList.add(rowClass);
+                bodyInput.classList.add(rowClass);
+            }
+            
+            // Set values
+            titleInput.value = title;
+            bodyInput.value = body;
         }
+        
+        // Clear colors when inputs are edited
+        document.getElementById('title').addEventListener('input', function() {
+            this.classList.remove('scam', 'legitimate');
+        });
+        document.getElementById('body').addEventListener('input', function() {
+            this.classList.remove('scam', 'legitimate');
+        });
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
