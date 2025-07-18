@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notification Tester</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .form-container {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1, h2 {
+            padding: 0 15px;
+        }
+        .table-container {
+            padding: 0 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            min-width: 600px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr.scam {
+            background-color: #ffdddd;
+        }
+        tr.legitimate {
+            background-color: #ddffdd;
+        }
+        tr {
+            height: 60px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .form-container {
+                padding: 20px 0;
+            }
+            h1, h2 {
+                padding: 0;
+            }
+            .table-container {
+                padding: 0;
+            }
+            button {
+                width: auto;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Notification Tester</h1>
+    
+    <div class="form-container">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter notification title">
+      </div>
+      
+      <div class="form-group">
+        <label for="body">Body:</label>
+        <textarea id="body" rows="3" placeholder="Enter notification body"></textarea>
+      </div>
+      
+      <button id="sendBtn">Send Notification</button>
+    </div>
+    
+    <h2>Sample Notifications</h2>
+    <div class="table-container">
+        <table id="notificationTable">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Body</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="scam" onclick="fillForm('Urgent: Your account will be locked!', 'Click now to verify your details')">
+                    <td>Scam</td>
+                    <td>Urgent: Your account will be locked!</td>
+                    <td>Click now to verify your details</td>
+                </tr>
+                <tr class="scam" onclick="fillForm(`You've won $1,000,000!`, 'Claim your prize by entering your bank details')">
+                    <td>Scam</td>
+                    <td>You've won $1,000,000!</td>
+                    <td>Claim your prize by entering your bank details</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Virus detected!', 'Download this antivirus immediately')">
+                    <td>Scam</td>
+                    <td>Virus detected!</td>
+                    <td>Download this antivirus immediately</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Your package is delayed', 'Click to update delivery information')">
+                    <td>Scam</td>
+                    <td>Your package is delayed</td>
+                    <td>Click to update delivery information</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Suspicious login attempt', 'Click here to secure your account')">
+                    <td>Scam</td>
+                    <td>Suspicious login attempt</td>
+                    <td>Click here to secure your account</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Tax refund available', 'Enter your SSN to claim')">
+                    <td>Scam</td>
+                    <td>Tax refund available</td>
+                    <td>Enter your SSN to claim</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Your subscription is expiring', 'Renew now with credit card')">
+                    <td>Scam</td>
+                    <td>Your subscription is expiring</td>
+                    <td>Renew now with credit card</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Bank account compromised', 'Verify your identity immediately')">
+                    <td>Scam</td>
+                    <td>Bank account compromised</td>
+                    <td>Verify your identity immediately</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Free iPhone giveaway', 'Just pay shipping costs')">
+                    <td>Scam</td>
+                    <td>Free iPhone giveaway</td>
+                    <td>Just pay shipping costs</td>
+                </tr>
+                <tr class="scam" onclick="fillForm('Your computer is infected', 'Call this number for support')">
+                    <td>Scam</td>
+                    <td>Your computer is infected</td>
+                    <td>Call this number for support</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('New message received', 'You have 3 unread messages')">
+                    <td>Legitimate</td>
+                    <td>New message received</td>
+                    <td>You have 3 unread messages</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Meeting reminder', 'Team sync in 15 minutes')">
+                    <td>Legitimate</td>
+                    <td>Meeting reminder</td>
+                    <td>Team sync in 15 minutes</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Password changed', 'Your password was updated successfully')">
+                    <td>Legitimate</td>
+                    <td>Password changed</td>
+                    <td>Your password was updated successfully</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Order shipped', 'Your package will arrive tomorrow')">
+                    <td>Legitimate</td>
+                    <td>Order shipped</td>
+                    <td>Your package will arrive tomorrow</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Calendar event', 'Dentist appointment at 2pm')">
+                    <td>Legitimate</td>
+                    <td>Calendar event</td>
+                    <td>Dentist appointment at 2pm</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('New follower', 'John Doe started following you')">
+                    <td>Legitimate</td>
+                    <td>New follower</td>
+                    <td>John Doe started following you</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Software update', 'New version available to download')">
+                    <td>Legitimate</td>
+                    <td>Software update</td>
+                    <td>New version available to download</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Backup complete', 'Your files were successfully backed up')">
+                    <td>Legitimate</td>
+                    <td>Backup complete</td>
+                    <td>Your files were successfully backed up</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Payment received', '$50.00 from Jane Smith')">
+                    <td>Legitimate</td>
+                    <td>Payment received</td>
+                    <td>$50.00 from Jane Smith</td>
+                </tr>
+                <tr class="legitimate" onclick="fillForm('Low battery', 'Your device battery is at 15%')">
+                    <td>Legitimate</td>
+                    <td>Low battery</td>
+                    <td>Your device battery is at 15%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fill form when clicking table rows
+        function fillForm(title, body) {
+            document.getElementById('title').value = title;
+            document.getElementById('body').value = body;
+        }
+
+        // Send notification when button is clicked
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const title = document.getElementById('title').value;
+            const body = document.getElementById('body').value;
+            
+            if (!title && !body) {
+                alert('Please enter at least a title or body for the notification');
+                return;
+            }
+            
+            // Check current permission state
+            if (Notification.permission === 'granted') {
+                new Notification(title || ' ', { body: body || ' ' });
+            } else if (Notification.permission === 'denied') {
+                alert('Notifications are blocked. Please enable them in your browser settings.');
+            } else {
+                // Request permission if not yet determined
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(title || ' ', { body: body || ' ' });
+                    } else {
+                        alert('Please allow notifications to use this feature');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
