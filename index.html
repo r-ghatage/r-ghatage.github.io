@@ -250,8 +250,21 @@
             document.getElementById('body').value = body;
         }
 
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
         // Send notification when button is clicked
-        document.getElementById('sendBtn').addEventListener('click', () => {
+        document.getElementById('sendBtn').addEventListener('click', async () => {
             const title = document.getElementById('title').value;
             const body = document.getElementById('body').value;
             
@@ -259,21 +272,16 @@
                 alert('Please enter at least a title or body for the notification');
                 return;
             }
-            
-            // Check current permission state
-            if (Notification.permission === 'granted') {
-                new Notification(title || ' ', { body: body || ' ' });
-            } else if (Notification.permission === 'denied') {
-                alert('Notifications are blocked. Please enable them in your browser settings.');
-            } else {
-                // Request permission if not yet determined
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        new Notification(title || ' ', { body: body || ' ' });
-                    } else {
-                        alert('Please allow notifications to use this feature');
-                    }
+
+            try {
+                const registration = await navigator.serviceWorker.ready;
+                registration.showNotification(title || ' ', { 
+                    body: body || ' ',
+                    icon: '/icon.png' // Optional: add path to your notification icon
                 });
+            } catch (err) {
+                console.error('Notification failed:', err);
+                alert('Failed to show notification. Please check console for details.');
             }
         });
     </script>
