@@ -9,8 +9,7 @@ self.addEventListener('push', event => {
     const notificationPromise = self.registration.showNotification(
       payload.title || 'Notification',
       {
-        body: payload.body || '',
-        icon: '/icon.png'
+        body: payload.body || ''
       }
     );
     

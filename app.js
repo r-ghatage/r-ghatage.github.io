@@ -82,8 +82,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
 
         console.log('Preparing to show notification...');
         await serviceWorkerRegistration.showNotification(title || 'Notification', { 
-            body: body || '',
-            icon: '/icon.png'
+            body: body || ''
         });
         console.log('Notification successfully shown');
         
